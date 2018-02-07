@@ -7,8 +7,16 @@
 
 import scrapy
 
-
 class VpnPoolItem(scrapy.Item):
-    # define the fields for your item here like:
-    # name = scrapy.Field()
-    pass
+    ip = scrapy.Field()
+    port = scrapy.Field()
+    stype = scrapy.Field()
+    ptype = scrapy.Field()
+    spost = scrapy.Field()
+    dtimen = scrapy.Field()
+    isactive = scrapy.Field()
+    ctime = scrapy.Field()
+
+if __name__ == '__main__':
+    vpn = VpnPoolItem(ip='12.12.12.11',port='42')
+
