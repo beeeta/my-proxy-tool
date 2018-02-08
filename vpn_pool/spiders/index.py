@@ -5,7 +5,7 @@ from vpn_pool.items import  VpnPoolItem
 from datetime import datetime
 
 class SeveSpider(scrapy.Spider):
-    name = 'seve'
+    name = 'index'
     allowed_domains = ['proxy.coderbusy.com']
     start_urls = ['https://proxy.coderbusy.com']
 
