@@ -28,8 +28,16 @@ class DB(object):
 
     def add(self,item):
         with self.connection(True) as con:
-            con.execute('insert into {} values(null,\'{ip}\',{port},{stype},\'{ptype}\',{spost},\
-            {dtimen},{isactive},\'{ctime}\')'.format(self.table_name,**dict(item.items())))
+            if isinstance(item,list):
+                ilist = list()
+                for i in item:
+                    par = (i.get('ip',''),i.get('port',''),i.get('stype',''),i.get('ptype',''),i.get('spost',''),i.get('dtimen',''),\
+                           i.get('isactive',''),i.get('ctime',''))
+                    ilist.append(par)
+                con.executemany('insert into vpns values(null,?,?,?,?,?,\
+                ?,?,?)',ilist)
+            else:
+                raise TypeError('param must be list')
 
     def fetch_all(self):
         with self.connection() as con:

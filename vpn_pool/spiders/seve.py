@@ -23,4 +23,6 @@ class SeveSpider(scrapy.Spider):
             ctime = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
             vpn = VpnPoolItem(ip=ip,port=port,stype=stype,ptype=ptype,spost=spost,dtimen=dtimen,isactive=isactive,ctime=ctime)
             items.append(vpn)
-        return items
+        yield  items
+        # 下一页
+        print('------------------- spider seve finished ------------------------')
