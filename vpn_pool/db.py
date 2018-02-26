@@ -37,7 +37,11 @@ class DB(object):
                 con.executemany('insert into vpns values(null,?,?,?,?,?,\
                 ?,?,?)',ilist)
             else:
-                raise TypeError('param must be list')
+                par = (item.get('ip', ''), item.get('port', ''), item.get('stype', ''), item.get('ptype', ''), item.get('spost', ''),
+                       item.get('dtimen', ''), \
+                       item.get('isactive', ''), item.get('ctime', ''))
+                con.execute('insert into vpns values(null,?,?,?,?,?,\
+                ?,?,?)',par)
 
     def fetch_all(self):
         with self.connection() as con:

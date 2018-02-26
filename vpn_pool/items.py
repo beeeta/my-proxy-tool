@@ -17,6 +17,5 @@ class VpnPoolItem(scrapy.Item):
     isactive = scrapy.Field()
     ctime = scrapy.Field()
 
-if __name__ == '__main__':
-    vpn = VpnPoolItem(ip='12.12.12.11',port='42')
+
 
