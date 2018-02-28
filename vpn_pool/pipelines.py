@@ -9,6 +9,7 @@ import json
 
 
 from datetime import datetime
+from vpn_pool.utils import check_vpn_validation
 
 class VpnPoolPipeline(object):
 
@@ -26,4 +27,4 @@ class VpnPoolPipeline(object):
     def close_spider(self,spider):
         self.f.close()
         # begin to filter un-active proxy
-
+        check_vpn_validation(self.db)

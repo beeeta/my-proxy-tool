@@ -48,10 +48,15 @@ class DB(object):
             items = con.execute('select * from {}'.format(self.table_name))
             return items.fetchall()
 
+    # ids数据量过大时，一次删除会有 sqlite3.OperationalError: too many SQL variables 错误，应分批删除
     def delete(self,ids):
         with self.connection(True) as con:
-            if isinstance(ids,list) or isinstance(ids,tuple):
-                ids_param = (len(ids)*'?,')[:-1]
-                con.execute(('delete from {} where id in ('+ ids_param +')').format(self.table_name),tuple(ids))
+            if isinstance(ids,list) or isinstance(ids,tuple) or isinstance(ids,set):
+                if len(ids) > 100:
+                    while len(ids) >0:
+                        del_ids = ids[:100]
+                        ids_param = (len(del_ids)*'?,')[:-1]
+                        con.execute(('delete from {} where id in ('+ ids_param +')').format(self.table_name),tuple(del_ids))
+                        ids = ids[100:]
             else:
                 con.execute('delete from {} where id =? '.format(self.table_name), (ids,))
