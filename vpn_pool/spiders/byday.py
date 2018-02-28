@@ -10,10 +10,6 @@ class EveryDaySpider(scrapy.Spider):
     start_urls = ['https://proxy.coderbusy.com/article/category/daily-proxy.aspx/']
 
     def parse(self, response):
-        # node_hrefs = response.xpath('//a[@class="tile waves-attach waves-effect"]/@href').extract()
-        # for href in node_hrefs:
-        #     sub_href = response.urljoin(href)
-        #     yield scrapy.Request(sub_href,callback=self.parse_proxy_content)
         yield from self.parse_per_page(response)
 
         # 获取其他页的数据
@@ -42,5 +38,3 @@ class EveryDaySpider(scrapy.Spider):
                 inf = inf[0]
                 stype = 1 if inf[3] == '匿名' else 0
                 yield dict(ip=inf[0],port=inf[1],ptype=inf[2],stype=stype,isactive=1,ctime=datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
-                # vpn = VpnPoolItem(ip=inf[0],port=inf[1],ptype=inf[2],stype=stype,isactive=1,ctime=datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
-                # yield vpn

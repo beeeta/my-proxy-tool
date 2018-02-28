@@ -7,24 +7,21 @@
 from vpn_pool.db import DB
 import json
 
-
 from datetime import datetime
 from vpn_pool.utils import check_vpn_validation
 
 class VpnPoolPipeline(object):
 
     def open_spider(self,spider):
-        nyr = datetime.now().strftime('%Y-%m-%d')
-        self.f = open('vpns_by_day_{}.txt'.format(nyr),'w')
         self.db = DB()
 
     def process_item(self, item, spider):
-        self.f.write(str(item))
-        self.f.write('\r')
-        self.db.add(item)
+        ip = item.get('ip')
+        port = item.get('port')
+        ex_items = self.db.find_by_ip_port(ip,port)
+        if not ex_items:
+            self.db.add(item)
         return item
 
     def close_spider(self,spider):
-        self.f.close()
-        # begin to filter un-active proxy
         check_vpn_validation(self.db)
