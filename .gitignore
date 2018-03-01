@@ -1,3 +1,5 @@
 /.idea
 /vpn_pool/__pycache__
 /vpn_pool/spiders/__pycache__
+/env
+/vpns_pool.db
