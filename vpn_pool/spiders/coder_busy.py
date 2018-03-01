@@ -1,17 +1,15 @@
 # -*- coding: utf-8 -*-
 import scrapy
 import re
-from vpn_pool.items import VpnPoolItem
 from datetime import datetime
 
-class EveryDaySpider(scrapy.Spider):
-    name = 'byday'
+class CoderBusySpider(scrapy.Spider):
+    name = 'coder'
     allowed_domains = ['proxy.coderbusy.com']
     start_urls = ['https://proxy.coderbusy.com/article/category/daily-proxy.aspx/']
 
     def parse(self, response):
         yield from self.parse_per_page(response)
-
         # 获取其他页的数据
         page_url = response.xpath('//a[@class="btn btn-flat waves-attach/@href"]').extract()[-1]
         page_url_index = page_url.split('=')
@@ -38,3 +36,6 @@ class EveryDaySpider(scrapy.Spider):
                 inf = inf[0]
                 stype = 1 if inf[3] == '匿名' else 0
                 yield dict(ip=inf[0],port=inf[1],ptype=inf[2],stype=stype,isactive=1,ctime=datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+
+
+

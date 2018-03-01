@@ -24,4 +24,5 @@ class VpnPoolPipeline(object):
         return item
 
     def close_spider(self,spider):
+        self.db.update_last_date()
         check_vpn_validation(self.db)

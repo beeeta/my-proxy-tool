@@ -1,5 +1,4 @@
 from multiprocessing.pool import ThreadPool
-import socket
 import requests
 import re
 
@@ -39,7 +38,7 @@ def vali_http(ip,port):
         'http': 'http://{}:{}'.format(ip,port),
     }
     try:
-        res = requests.get('http://2017.ip138.com/ic.asp',proxies=proxies,timeout=3)
+        res = requests.get('http://2017.ip138.com/ic.asp',proxies=proxies,timeout=2)
     except:
         print('{}:{} http 验证无法连接'.format(ip, port))
         return UNAVAILABLE
